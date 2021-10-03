@@ -1,5 +1,7 @@
 from models import (Base, session,
                     Book, engine)
+import datetime
+import csv
 
 
 def menu():
@@ -19,14 +21,41 @@ def menu():
                   \rPlease choose one of the options above.
                   \rA number from 1-5.
                   \rPress enter to try again.''')
-#import models
 #main menu -add search, analysis, exit, view
 # add books to the database
 # edit books
 #delete books
 #search
 #data cleaning
-#loop runs program
+
+def clean_date(date_str):
+    months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+    split_date = date_str.split(' ')
+    month = int(months.index(split_date[0]) + 1)
+    day = int(split_date[1].split(',')[0])
+    year = int(split_date[2])
+    return datetime.date(year, month, day)
+
+
+def clean_price(price_str):
+    price_float = float(price_str)
+    return int(price_float * 100)
+
+
+    
+def add_csv():
+    with open('suggested_books.csv') as csvfile:
+        data = csv.reader(csvfile)
+        for row in data:
+            print(row)
+            title = row[0]
+            author = r[1]
+            date = clean_date(row[2])
+            price = clean_price(row[3])
+            
+
+
 def app():
     app_running = True
     while app_running:
@@ -51,4 +80,6 @@ def app():
 
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
-    menu()
+    #app()
+    add_csv()
+    
