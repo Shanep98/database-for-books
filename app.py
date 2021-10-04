@@ -202,7 +202,15 @@ def app():
                 print('Book Deleted')
         elif choice =='4':
             #analysis
-            pass
+            oldest_book = session.query(Book).order_by(Book.published_date).first()
+            newest_book = session.query(Book).order_by(Book.published_date.desc()).first()
+            total_books = session.query(Book).count()
+            python_books = session.query(Book).filter(Book.title.like('%Python%')).count()
+            print(f'''
+                  \nMost recent book: {newest_book}
+                  \rOldest Book: {oldest_book}
+                  \rTotal Number of Books: {total_books}''')
+            input('Press ENTER to return to the main menu')
         else:
             print('Goodbye')
             app_running = False
